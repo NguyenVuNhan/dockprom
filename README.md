@@ -27,7 +27,7 @@ Containers:
 - Prometheus-Pushgateway (push acceptor for ephemeral and batch jobs) `http://<host-ip>:9091`
 - AlertManager (alerts management) `http://<host-ip>:9093`
 - Grafana (visualize metrics) `http://<host-ip>:8080/grafana`
-- NodeServer (Basic express server) `http://<host-ip>:8080/api/*`
+- Backend (Basic express app) `http://<host-ip>:8080/api/*`
 - NodeExporter (host metrics collector)
 - cAdvisor (containers metrics collector)
 - Nginx (reverse proxy and basic auth provider)
@@ -58,7 +58,7 @@ If you want to change the password, you have to remove this entry, otherwise the
 - grafana_data:/var/lib/grafana
 ```
 
-Grafana is preconfigured with dashboards and Prometheus as the default data source:
+Grafana is pre-configured with dashboards and Prometheus as the default data source:
 
 - Name: Prometheus
 - Type: Prometheus
@@ -198,11 +198,7 @@ Trigger an alert if the Docker host storage is almost full:
 Trigger an alert if a container is down for more than 30 seconds:
 
 ```yaml
-- alert: jenkins_down
-    expr: absent(container_memory_usage_bytes{name="jenkins"})
-    for: 30s
-    labels:
-      severity: critical
+- alert: jenkins_down expr: absent(container_memory_usage_bytes{name="jenkins"}) for: 30s labels: severity: critical
     annotations:
       summary: "Jenkins down"
       description: "Jenkins container is down for more than 30 seconds."
