@@ -33,11 +33,11 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ["pushgateway:9091"]
-  - job_name: "server"
+  - job_name: "backend"
     scrape_interval: 10s
     honor_labels: true
     static_configs:
-      - targets: ["server:9991"]
+      - targets: ["backend:9991"]
   - job_name: "nginx"
     scrape_interval: 10s
     static_configs:
