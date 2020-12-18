@@ -125,14 +125,14 @@ services:
 
   # Container metric collector
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.38.6
+    image: unibaktr/cadvisor:v0.36.0
     container_name: cadvisor
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:rw
+      - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker:/var/lib/docker:ro
-      #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+      - /dev/disk/:/dev/disk:ro
     restart: unless-stopped
     networks:
       - monitor-net
@@ -146,6 +146,7 @@ services:
     image: nginx:alpine
     container_name: nginx
     ports:
+      - "0.0.0.0:80:80"
       - "8080:80"
       - "9090:9090" # prometheus
       - "9091:9091" # push gateway
